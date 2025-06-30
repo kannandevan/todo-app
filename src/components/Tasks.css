@@ -1,0 +1,26 @@
+.tasks{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.tasks li{
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    cursor: pointer;
+}
+.tasks li:hover{
+    background-color: aliceblue;
+}
+.task{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: nowrap;
+
+}
+.task-completd{
+    text-decoration: line-through;
+
+}

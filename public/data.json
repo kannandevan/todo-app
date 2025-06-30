@@ -1,0 +1,22 @@
+[
+    {
+        "name":"MAKE TO DO APP",
+        "id":1,
+        "isCompleted":false
+    },
+    {
+        "name":"Install dependencies ",
+        "id":2,
+        "isCompleted":true
+    },
+    {
+        "name":"Make a flow",
+        "id":3,
+        "isCompleted":true
+    },
+    {
+        "name":"Finish the To do APp",
+        "id":4,
+        "isCompleted":false
+    }
+]
