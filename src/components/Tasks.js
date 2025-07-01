@@ -7,7 +7,7 @@ const Tasks = (props) => {
 
 
             <ul className="tasks">
-                {tasks.map((task,index) => (<li key={task.id} className="task">
+                {tasks.map((task,index) => (<li key={task.id} className="task" onClick={() => statusHandle(task.id)}>
                     <div>{index+1}</div>
                     <div className={task.isCompleted ? 'task-completd':''}>{task.name}</div>
                     <div>
