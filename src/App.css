@@ -1,26 +1,105 @@
-.app{
-   min-width: 300px;
-   max-width: 500px;
-    /* height: 100vh; */
+.app {
+    max-width: 480px;
+    min-height: 100vh;
     margin: 0 auto;
-    background-color: antiquewhite;
-}
-.task-group{
+    background-color: var(--bg-color);
     position: relative;
-    width: auto;
-    background-color: aqua;
-    padding: 10px;
-    margin-top: 10px;
-    /* text-align: center; */
+    padding-bottom: 100px;
+    /* Space for fixed input */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 }
-.task-heading{
-    background-color: blueviolet;
-    padding: 10px;
-    font-weight: bold;
+
+.app-header {
+    padding: 30px 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
 }
-.add-input{
-    width: 100%;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    height: 2em;
+
+.app-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.app-subtitle {
+    margin: 5px 0 0;
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+.task-group {
+    padding: 0 20px;
+    margin-bottom: 24px;
+}
+
+.task-heading {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    font-weight: 700;
+    padding-left: 4px;
+    background: transparent;
+    /* Reset */
+}
+
+/* Input Area - Fixed Bottom */
+.input-area {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 440px;
+    background-color: var(--card-bg);
+    padding: 8px;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.add-input {
+    flex: 1;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--text-main);
+}
+
+.add-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.add-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+}
+
+.add-btn:active {
+    transform: scale(0.95);
+}
+
+.add-btn:hover {
+    background-color: var(--primary-dark);
 }

@@ -35,34 +35,56 @@ function App() {
   }
   const handleAddTask = () => {
     if (input.trim()) {
-      const newId = lastId +1;
+      const newId = lastId + 1;
       const newData = {
         name: input,
         id: newId,
         isCompleted: false
       };
-      setTasks([...tasks,newData]);
+      setTasks([...tasks, newData]);
       setLastId(newId);
+      setInput('');
+    }
   }
-}
   const pendingTasks = tasks.filter((task) => !task.isCompleted);
   const completedTasks = tasks.filter((task) => task.isCompleted);
   return (
     <div className='app'>
-      {
-        pendingTasks.length != 0 ?
-          <div className='task-group'><div className="task-heading">Pending Tasks</div><Tasks tasks={pendingTasks} statusHandle={handleStatusChange} /></div> : ''
-      }
-      {
-        completedTasks.length != 0 ?
-          <div className='task-group'><div className="task-heading">Completed Tasks</div><Tasks tasks={completedTasks} statusHandle={handleStatusChange} /></div> : ''
-      }
-      <div>
-        <div className="task-group">
-          <div className="task-heading">Add new task</div>
-          <input type="text" name="" value={input} placeholder='Add task' className='add-input' onChange={handleInputChange} />
-          <button onClick={handleAddTask}>Add task</button>
+      <header className="app-header">
+        <h1 className="app-title">Todo App</h1>
+        <p className="app-subtitle">Focus on your day</p>
+      </header>
+
+      <div className='task-group'>
+        <div className="task-heading">Pending ({pendingTasks.length})</div>
+        {pendingTasks.length > 0 ? (
+          <Tasks tasks={pendingTasks} statusHandle={handleStatusChange} />
+        ) : (
+          <div style={{ padding: '20px', textAlign: 'center', opacity: 0.5 }}>
+            No pending tasks
+          </div>
+        )}
+      </div>
+
+      {completedTasks.length > 0 && (
+        <div className='task-group'>
+          <div className="task-heading">Completed ({completedTasks.length})</div>
+          <Tasks tasks={completedTasks} statusHandle={handleStatusChange} />
         </div>
+      )}
+
+      <div className="input-area">
+        <input
+          type="text"
+          value={input}
+          placeholder='Add a new task...'
+          className='add-input'
+          onChange={handleInputChange}
+          onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
+        />
+        <button className="add-btn" onClick={handleAddTask}>
+          +
+        </button>
       </div>
     </div>
   );

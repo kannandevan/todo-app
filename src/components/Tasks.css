@@ -1,28 +1,67 @@
-.tasks{
+.tasks {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-.tasks li{
-    list-style-type: none;
-    margin: 0;
-    padding: 5px;
-    cursor: pointer;
-    background-color: blueviolet;
-    border-top: 1px dashed white;
-}
-.tasks li:hover{
-    background-color: aliceblue;
-}
-.task{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    flex-wrap: nowrap;
-
+    flex-direction: column;
+    gap: 12px;
 }
-.task-completd{
-    text-decoration: line-through;
 
+.tasks li {
+    margin: 0;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.task:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Custom Checkbox Container */
+.task-checkbox-container {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.task-checkbox {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+    border-radius: 6px;
+}
+
+/* Task Text */
+.task-text {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 12px;
+    color: var(--text-main);
+    transition: color 0.2s;
+}
+
+.task.completed .task-text {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+/* Index Number (Optional, maybe remove?) */
+.task-index {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 24px;
 }

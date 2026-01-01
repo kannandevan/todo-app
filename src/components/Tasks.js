@@ -6,20 +6,26 @@ const Tasks = (props) => {
     return (
 
 
-            <ul className="tasks">
-                {tasks.map((task,index) => (<li key={task.id} className="task" onClick={() => statusHandle(task.id)}>
-                    <div>{index+1}</div>
-                    <div className={task.isCompleted ? 'task-completd':''}>{task.name}</div>
-                    <div>
-                        <input 
-                        type="checkbox" 
-                        name="" id="" 
-                        checked={task.isCompleted}  
-                        onChange={() => statusHandle(task.id)}
-                        /></div>
-                </li>))}
-
-            </ul>
+    <ul className="tasks">
+      {tasks.map((task, index) => (
+        <li
+          key={task.id}
+          className={`task ${task.isCompleted ? 'completed' : ''}`}
+          onClick={() => statusHandle(task.id)}
+        >
+          <div className="task-index">{index + 1}</div>
+          <div className="task-text">{task.name}</div>
+          <div className="task-checkbox-container">
+            <input
+              type="checkbox"
+              className="task-checkbox"
+              checked={!!task.isCompleted}
+              readOnly
+            />
+          </div>
+        </li>
+      ))}
+    </ul>
 
 
     )
