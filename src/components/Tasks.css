@@ -13,7 +13,8 @@
 
 .task {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    /* Align to top for multiline */
     padding: 16px;
     background-color: var(--card-bg);
     border-radius: var(--radius-md);
@@ -30,32 +31,75 @@
 
 /* Custom Checkbox Container */
 .task-checkbox-container {
-    margin-left: auto;
+    margin-left: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 2px;
 }
 
 .task-checkbox {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     cursor: pointer;
     accent-color: var(--primary-color);
     border-radius: 6px;
+}
+
+.task-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 12px;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 /* Task Text */
 .task-text {
     font-size: 1rem;
     font-weight: 500;
-    margin-left: 12px;
     color: var(--text-main);
     transition: color 0.2s;
+    line-height: 1.4;
+}
+
+.task-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.task-due-date {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    background: rgba(37, 99, 235, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.task-completed-date {
+    font-size: 0.75rem;
+    color: #10b981;
+    font-weight: 500;
 }
 
 .task.completed .task-text {
     text-decoration: line-through;
     color: var(--text-secondary);
+}
+
+.task.completed .task-description {
+    text-decoration: line-through;
+    opacity: 0.7;
 }
 
 /* Index Number (Optional, maybe remove?) */
