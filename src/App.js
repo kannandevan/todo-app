@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
-import Tasks from './components/Tasks'
+import Tasks from './components/Tasks';
+import ConfirmationModal from './components/ConfirmationModal';
+
 function App() {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState('');
@@ -9,6 +11,10 @@ function App() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [lastId, setLastId] = useState(0);
+
+  // Modal State
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   useEffect(() => {
     axios.get('./data.json')
@@ -38,11 +44,23 @@ function App() {
     setTasks(updatedTasks);
   }
 
-  const handleDeleteTask = (id) => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
-      const updatedTasks = tasks.filter((task) => task.id !== id);
+  const handleDeleteClick = (id) => {
+    setTaskToDelete(id);
+    setIsDeleteModalOpen(true);
+  }
+
+  const confirmDeleteTask = () => {
+    if (taskToDelete) {
+      const updatedTasks = tasks.filter((task) => task.id !== taskToDelete);
       setTasks(updatedTasks);
+      setIsDeleteModalOpen(false);
+      setTaskToDelete(null);
     }
+  }
+
+  const cancelDeleteTask = () => {
+    setIsDeleteModalOpen(false);
+    setTaskToDelete(null);
   }
 
   const handleInputChange = (event) => {
@@ -142,7 +160,7 @@ function App() {
           <Tasks
             tasks={pendingTasks}
             statusHandle={handleStatusChange}
-            deleteHandle={handleDeleteTask}
+            deleteHandle={handleDeleteClick}
           />
         ) : (
           <div style={{ padding: '20px', textAlign: 'center', opacity: 0.5 }}>
@@ -157,10 +175,18 @@ function App() {
           <Tasks
             tasks={completedTasks}
             statusHandle={handleStatusChange}
-            deleteHandle={handleDeleteTask}
+            deleteHandle={handleDeleteClick}
           />
         </div>
       )}
+
+      <ConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={cancelDeleteTask}
+        onConfirm={confirmDeleteTask}
+        title="Delete Task"
+        message="Are you sure you want to delete this task? This action cannot be undone."
+      />
     </div>
   );
 }
