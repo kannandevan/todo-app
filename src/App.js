@@ -37,6 +37,14 @@ function App() {
     })
     setTasks(updatedTasks);
   }
+
+  const handleDeleteTask = (id) => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      const updatedTasks = tasks.filter((task) => task.id !== id);
+      setTasks(updatedTasks);
+    }
+  }
+
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     setInput(inputValue);
@@ -131,7 +139,11 @@ function App() {
       <div className='task-group'>
         <div className="task-heading">Pending ({pendingTasks.length})</div>
         {pendingTasks.length > 0 ? (
-          <Tasks tasks={pendingTasks} statusHandle={handleStatusChange} />
+          <Tasks
+            tasks={pendingTasks}
+            statusHandle={handleStatusChange}
+            deleteHandle={handleDeleteTask}
+          />
         ) : (
           <div style={{ padding: '20px', textAlign: 'center', opacity: 0.5 }}>
             No pending tasks
@@ -142,7 +154,11 @@ function App() {
       {completedTasks.length > 0 && (
         <div className='task-group'>
           <div className="task-heading">Completed ({completedTasks.length})</div>
-          <Tasks tasks={completedTasks} statusHandle={handleStatusChange} />
+          <Tasks
+            tasks={completedTasks}
+            statusHandle={handleStatusChange}
+            deleteHandle={handleDeleteTask}
+          />
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import './Tasks.css'
 const Tasks = (props) => {
-  const { tasks, statusHandle } = props;
+  const { tasks, statusHandle, deleteHandle } = props;
 
   return (
 
@@ -41,13 +41,25 @@ const Tasks = (props) => {
                 </div>
               )}
             </div>
-            <div className="task-checkbox-container">
-              <input
-                type="checkbox"
-                className="task-checkbox"
-                checked={!!task.isCompleted}
-                readOnly
-              />
+            <div className="task-actions">
+              <button
+                className="delete-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteHandle(task.id);
+                }}
+                title="Delete task"
+              >
+                ×
+              </button>
+              <div className="task-checkbox-container">
+                <input
+                  type="checkbox"
+                  className="task-checkbox"
+                  checked={!!task.isCompleted}
+                  readOnly
+                />
+              </div>
             </div>
           </li>
         );
