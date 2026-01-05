@@ -4,7 +4,7 @@
     margin: 0 auto;
     background-color: var(--bg-color);
     position: relative;
-    padding-bottom: 100px;
+    padding-bottom: 160px;
     /* Space for fixed input */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 }

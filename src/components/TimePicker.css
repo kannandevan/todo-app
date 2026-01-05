@@ -1,0 +1,216 @@
+.time-picker-container {
+    position: relative;
+    width: 100%;
+}
+
+.time-picker-input {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cpolyline points='12 6 12 12 16 14'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 32px;
+}
+
+.time-picker-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.time-picker-modal {
+    background: white;
+    border-radius: 20px;
+    width: 280px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    animation: scaleIn 0.2s ease-out;
+}
+
+/* Header Section */
+.time-picker-header {
+    background-color: var(--primary-color);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #93c5fd;
+    /* Light blue text for inactive */
+}
+
+.time-display {
+    display: flex;
+    align-items: baseline;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.time-value {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.time-value.active {
+    color: white;
+}
+
+.time-separator {
+    margin: 0 4px;
+    color: white;
+}
+
+.am-pm-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 12px;
+}
+
+.am-pm-btn {
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+}
+
+.am-pm-btn.active {
+    color: white;
+}
+
+/* Clock Face */
+.clock-face-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    position: relative;
+}
+
+.clock-face {
+    width: 220px;
+    height: 220px;
+    background-color: #f1f5f9;
+    border-radius: 50%;
+    position: relative;
+}
+
+.clock-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.clock-hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 40%;
+    background-color: var(--primary-color);
+    transform-origin: bottom center;
+    z-index: 5;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.clock-hand::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 28px;
+    height: 28px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.2;
+}
+
+.clock-number {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    top: 0;
+    left: 0;
+    /* Will be positioned by JS */
+}
+
+.clock-number.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Footer */
+.time-picker-footer {
+    padding: 10px 20px 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.time-picker-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.time-picker-btn:hover {
+    background-color: #eff6ff;
+}
+
+.time-picker-btn.cancel {
+    color: var(--text-secondary);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

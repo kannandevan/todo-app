@@ -3,6 +3,7 @@ import './App.css';
 import axios from "axios";
 import Tasks from './components/Tasks';
 import ConfirmationModal from './components/ConfirmationModal';
+import TimePicker from './components/TimePicker';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -141,11 +142,11 @@ function App() {
               className='add-input date-input'
               onChange={(e) => setDate(e.target.value)}
             />
-            <input
-              type="time"
+            <TimePicker
               value={time}
-              className='add-input time-input'
               onChange={(e) => setTime(e.target.value)}
+              className='time-input'
+              placeholder="Time"
             />
           </div>
         </div>
