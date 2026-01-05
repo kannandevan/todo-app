@@ -1,35 +1,45 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import axios from "axios";
 import Tasks from './components/Tasks';
 import ConfirmationModal from './components/ConfirmationModal';
 import TimePicker from './components/TimePicker';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  /* Initialize tasks from localStorage */
+  const [tasks, setTasks] = useState(() => {
+    try {
+      const savedTasks = localStorage.getItem('tasks');
+      return savedTasks ? JSON.parse(savedTasks) : [];
+    } catch (error) {
+      console.error('Error reading from localStorage:', error);
+      return [];
+    }
+  });
+
   const [input, setInput] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [lastId, setLastId] = useState(0);
+
+  /* Initialize lastId based on existing tasks */
+  const [lastId, setLastId] = useState(() => {
+    try {
+      const savedTasks = localStorage.getItem('tasks');
+      const parsedTasks = savedTasks ? JSON.parse(savedTasks) : [];
+      return parsedTasks.length > 0 ? Math.max(...parsedTasks.map(t => t.id)) : 0;
+    } catch {
+      return 0;
+    }
+  });
 
   // Modal State
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
 
+  /* Persist tasks to localStorage whenever they change */
   useEffect(() => {
-    axios.get('./data.json')
-      .then((res) => {
-        const allTasks = res.data;
-        const idLast = allTasks.length > 0 ? allTasks.at(-1).id : 0;
-        setLastId(idLast);
-        setTasks(allTasks);
-
-      })
-      .catch((err) => {
-        console.error('failed to Fetch Data ', err)
-      })
-  }, []);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleStatusChange = (id) => {
     const updatedTasks = tasks.map((task) => {
