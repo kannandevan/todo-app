@@ -1,4 +1,29 @@
-.tasks {
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.task-group-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.group-header {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0 0 4px 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.group-header.completed-header {
+    color: #10b981;
+}
+
+.tasks-list {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -7,14 +32,9 @@
     gap: 12px;
 }
 
-.tasks li {
-    margin: 0;
-}
-
 .task {
     display: flex;
     align-items: flex-start;
-    /* Align to top for multiline */
     padding: 16px;
     background-color: var(--card-bg);
     border-radius: var(--radius-md);
@@ -29,7 +49,20 @@
     box-shadow: var(--shadow-md);
 }
 
-/* Custom Checkbox Container */
+/* Overdue Styling */
+.task.overdue {
+    border-left: 4px solid #ef4444;
+}
+
+.overdue-badge {
+    font-size: 0.75rem;
+    color: #ef4444;
+    font-weight: 600;
+    background: #fee2e2;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
 .task-actions {
     margin-left: 12px;
     display: flex;
@@ -78,19 +111,18 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     margin-left: 12px;
 }
 
 .task-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
     flex-wrap: wrap;
 }
 
-/* Task Text */
 .task-text {
     font-size: 1rem;
     font-weight: 500;
@@ -103,6 +135,13 @@
     font-size: 0.85rem;
     color: var(--text-secondary);
     line-height: 1.4;
+}
+
+.task-meta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .task-due-date {
@@ -130,10 +169,7 @@
     opacity: 0.7;
 }
 
-/* Index Number (Optional, maybe remove?) */
+/* Hide task index as it complicates the cleaner UI */
 .task-index {
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    font-weight: 600;
-    width: 24px;
+    display: none;
 }

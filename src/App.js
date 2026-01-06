@@ -82,10 +82,22 @@ function App() {
   const handleAddTask = () => {
     if (input.trim()) {
       const newId = lastId + 1;
+
+      // Default to today if date is not provided
+      let finalDate = date;
+      if (!finalDate) {
+        const now = new Date();
+        finalDate = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+      }
+
+      const hasTime = !!time;
+      const finalDateTime = hasTime ? `${finalDate}T${time}` : `${finalDate}T00:00`;
+
       const newData = {
         name: input,
         description: description,
-        dueDate: date ? (time ? `${date}T${time}` : `${date}T00:00`) : null,
+        dueDate: finalDateTime,
+        hasTime: hasTime,
         id: newId,
         isCompleted: false,
         createdAt: new Date().toISOString()
@@ -187,6 +199,7 @@ function App() {
             tasks={completedTasks}
             statusHandle={handleStatusChange}
             deleteHandle={handleDeleteClick}
+            isCompletedList={true}
           />
         </div>
       )}
