@@ -138,13 +138,12 @@ const Tasks = (props) => {
               >
                 ×
               </button>
-              <div className="task-checkbox-container">
-                <input
-                  type="checkbox"
-                  className="task-checkbox"
-                  checked={!!task.isCompleted}
-                  readOnly
-                />
+              <div className="checkbox-wrapper">
+                <div className={`custom-checkbox ${task.isCompleted ? 'checked' : ''}`}>
+                  <svg className="checkmark-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
               </div>
             </div>
           </li>
