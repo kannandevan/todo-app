@@ -180,7 +180,7 @@ const TimePicker = ({ value, onChange, placeholder = "Set Time", className = "" 
                                 <div className="clock-center"></div>
                                 <div
                                     className="clock-hand"
-                                    style={{ transform: `translateX(-50%) rotate(${getHandRotation()}deg)` }}
+                                    style={{ transform: `rotate(${getHandRotation()}deg)` }}
                                 ></div>
                                 {renderClockNumbers()}
                             </div>
