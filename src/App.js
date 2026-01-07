@@ -85,9 +85,17 @@ function App() {
 
       // Default to today if date is not provided
       let finalDate = date;
+
+      const now = new Date();
+      const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+
+      if (date && date < todayStr) {
+        alert("You cannot create a task for a previous date. Please choose a valid date.");
+        return;
+      }
+
       if (!finalDate) {
-        const now = new Date();
-        finalDate = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+        finalDate = todayStr;
       }
 
       const hasTime = !!time;
