@@ -20,7 +20,6 @@ const Tasks = (props) => {
 
   // Grouping Logic
   const groups = {};
-  const noDateTasks = [];
 
   tasks.forEach(task => {
     let dateKey = '';
@@ -47,11 +46,12 @@ const Tasks = (props) => {
         displayHeader = "Previous days";
       }
     } else {
+      let dueDate;
       if (!task.dueDate) {
-        noDateTasks.push(task);
-        return;
+        dueDate = today; // Treat no-date tasks as Today
+      } else {
+        dueDate = startOfDay(task.dueDate);
       }
-      const dueDate = startOfDay(task.dueDate);
 
       if (dueDate.getTime() < today.getTime()) {
         isOverdue = true;
@@ -67,7 +67,7 @@ const Tasks = (props) => {
         displayHeader = dueDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
         sortValue = dueDate.getTime();
       }
-      dateKey = displayHeader; // Use header as key for pending to group by specific date
+      dateKey = displayHeader;
     }
 
     if (!groups[dateKey]) {
@@ -75,7 +75,7 @@ const Tasks = (props) => {
         title: displayHeader,
         tasks: [],
         sortValue: sortValue,
-        isOverdueGroup: isOverdue // Mark group as potentially containing overdue items (though overdue items are grouped by date)
+        isOverdueGroup: isOverdue
       };
     }
     groups[dateKey].tasks.push({ ...task, isOverdue });
@@ -172,13 +172,7 @@ const Tasks = (props) => {
         </div>
       ))}
 
-      {/* Render tasks with no due date at the end for pending list */}
-      {!isCompletedList && noDateTasks.length > 0 && (
-        <div className="task-group-section">
-          <h3 className="group-header">No Date</h3>
-          {renderTaskList(noDateTasks)}
-        </div>
-      )}
+
     </div>
   );
 }
