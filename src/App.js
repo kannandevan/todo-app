@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Tasks from './components/Tasks';
 import ConfirmationModal from './components/ConfirmationModal';
+import AlertModal from './components/AlertModal';
 import TimePicker from './components/TimePicker';
 
 function App() {
@@ -35,6 +36,10 @@ function App() {
   // Modal State
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
+
+  // Alert State
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   /* Persist tasks to localStorage whenever they change */
   useEffect(() => {
@@ -90,7 +95,8 @@ function App() {
       const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
 
       if (date && date < todayStr) {
-        alert("You cannot create a task for a previous date. Please choose a valid date.");
+        setAlertMessage("You cannot create a task for a previous date. Please choose a valid date.");
+        setIsAlertOpen(true);
         return;
       }
 
@@ -222,6 +228,13 @@ function App() {
         onConfirm={confirmDeleteTask}
         title="Delete Task"
         message="Are you sure you want to delete this task? This action cannot be undone."
+      />
+
+      <AlertModal
+        isOpen={isAlertOpen}
+        onClose={() => setIsAlertOpen(false)}
+        title="Invalid Date"
+        message={alertMessage}
       />
     </div>
   );
