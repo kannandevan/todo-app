@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import Tasks from './components/Tasks';
 import ConfirmationModal from './components/ConfirmationModal';
 import AlertModal from './components/AlertModal';
 import TimePicker from './components/TimePicker';
+import CompletedHistory from './components/CompletedHistory';
 
 function App() {
   /* Initialize tasks from localStorage */
@@ -147,95 +149,162 @@ function App() {
       return 0;
     });
 
+  /* Navigation Helper */
+  const navigate = useNavigate();
+
+  const handleShowHistory = () => {
+    navigate('/completed-history');
+  }
+
+  /* Filtering helper for main view */
+  const recentCompletedTasks = completedTasks.filter(task => {
+    const completedDate = new Date(task.completedAt);
+    completedDate.setHours(0, 0, 0, 0);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    return completedDate.getTime() === today.getTime() || completedDate.getTime() === yesterday.getTime();
+  });
+
+  const hasOlderTasks = completedTasks.length > recentCompletedTasks.length;
+
   return (
     <div className='app'>
-      <header className="app-header">
-        <h1 className="app-title">Todo App</h1>
-        <p className="app-subtitle">Focus on your day</p>
-      </header>
+      <Routes>
+        <Route path="/" element={
+          <>
+            <header className="app-header">
+              <h1 className="app-title">Todo App</h1>
+              <p className="app-subtitle">Focus on your day</p>
+            </header>
 
-      <div className="input-area">
-        <div className="input-group">
-          <input
-            type="text"
-            value={input}
-            placeholder='Add a new task...'
-            className='add-input'
-            onChange={handleInputChange}
-            onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
-          />
-          <input
-            type="text"
-            value={description}
-            placeholder='Description (optional)'
-            className='add-input description-input'
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <div className="date-time-inputs">
-            <input
-              type="date"
-              value={date}
-              min={(() => {
-                const now = new Date();
-                return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-              })()}
-              className='add-input date-input'
-              onChange={(e) => setDate(e.target.value)}
-            />
-            <TimePicker
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              className='time-input'
-              placeholder="Time"
-            />
-          </div>
-        </div>
-        <button className="add-btn" onClick={handleAddTask}>
-          +
-        </button>
-      </div>
+            <div className="input-area">
+              <div className="input-group">
+                <input
+                  type="text"
+                  value={input}
+                  placeholder='Add a new task...'
+                  className='add-input'
+                  onChange={handleInputChange}
+                  onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
+                />
+                <input
+                  type="text"
+                  value={description}
+                  placeholder='Description (optional)'
+                  className='add-input description-input'
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <div className="date-time-inputs">
+                  <input
+                    type="date"
+                    value={date}
+                    min={(() => {
+                      const now = new Date();
+                      return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+                    })()}
+                    className='add-input date-input'
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                  <TimePicker
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    className='time-input'
+                    placeholder="Time"
+                  />
+                </div>
+              </div>
+              <button className="add-btn" onClick={handleAddTask}>
+                +
+              </button>
+            </div>
 
-      <div className='task-group'>
-        <div className="task-heading">Pending ({pendingTasks.length})</div>
-        {pendingTasks.length > 0 ? (
-          <Tasks
-            tasks={pendingTasks}
+            <div className='task-group'>
+              <div className="task-heading">Pending ({pendingTasks.length})</div>
+              {pendingTasks.length > 0 ? (
+                <Tasks
+                  tasks={pendingTasks}
+                  statusHandle={handleStatusChange}
+                  deleteHandle={handleDeleteClick}
+                />
+              ) : (
+                <div style={{ padding: '20px', textAlign: 'center', opacity: 0.5 }}>
+                  No pending tasks
+                </div>
+              )}
+            </div>
+
+            {recentCompletedTasks.length > 0 && (
+              <div className='task-group'>
+                <div className="task-heading">Completed ({recentCompletedTasks.length})</div>
+                <Tasks
+                  tasks={recentCompletedTasks}
+                  statusHandle={handleStatusChange}
+                  deleteHandle={handleDeleteClick}
+                  isCompletedList={true}
+                />
+              </div>
+            )}
+
+            {hasOlderTasks && (
+              <div style={{ textAlign: 'center', padding: '10px 0 30px' }}>
+                <button
+                  onClick={handleShowHistory}
+                  title="View History"
+                  style={{
+                    background: 'var(--card-bg)',
+                    border: 'none',
+                    color: 'var(--text-secondary)',
+                    cursor: 'pointer',
+                    padding: '12px',
+                    borderRadius: '50%',
+                    boxShadow: 'var(--shadow-md)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                  onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 3v5h5" />
+                    <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" />
+                    <path d="M12 7v5l4 2" />
+                  </svg>
+                </button>
+              </div>
+            )}
+
+            <ConfirmationModal
+              isOpen={isDeleteModalOpen}
+              onClose={cancelDeleteTask}
+              onConfirm={confirmDeleteTask}
+              title="Delete Task"
+              message="Are you sure you want to delete this task? This action cannot be undone."
+            />
+
+            <AlertModal
+              isOpen={isAlertOpen}
+              onClose={() => setIsAlertOpen(false)}
+              title="Invalid Date"
+              message={alertMessage}
+            />
+          </>
+        } />
+
+        <Route path="/completed-history" element={
+          <CompletedHistory
+            tasks={tasks}
             statusHandle={handleStatusChange}
             deleteHandle={handleDeleteClick}
           />
-        ) : (
-          <div style={{ padding: '20px', textAlign: 'center', opacity: 0.5 }}>
-            No pending tasks
-          </div>
-        )}
-      </div>
-
-      {completedTasks.length > 0 && (
-        <div className='task-group'>
-          <div className="task-heading">Completed ({completedTasks.length})</div>
-          <Tasks
-            tasks={completedTasks}
-            statusHandle={handleStatusChange}
-            deleteHandle={handleDeleteClick}
-            isCompletedList={true}
-          />
-        </div>
-      )}
-
-      <ConfirmationModal
-        isOpen={isDeleteModalOpen}
-        onClose={cancelDeleteTask}
-        onConfirm={confirmDeleteTask}
-        title="Delete Task"
-        message="Are you sure you want to delete this task? This action cannot be undone."
-      />
-
-      <AlertModal
-        isOpen={isAlertOpen}
-        onClose={() => setIsAlertOpen(false)}
-        title="Invalid Date"
-        message={alertMessage}
-      />
+        } />
+      </Routes>
     </div>
   );
 }
