@@ -9,17 +9,12 @@ const CompletedHistory = ({ tasks, statusHandle, deleteHandle }) => {
     // Filter only completed tasks
     const allCompletedTasks = tasks.filter(task => task.isCompleted);
 
-    // Separate tasks into Recent (Today/Yesterday) and History (Older)
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    const olderCompletedTasks = allCompletedTasks.filter(task => {
-        const completedDate = new Date(task.completedAt);
-        completedDate.setHours(0, 0, 0, 0);
-        return completedDate < yesterday;
+    // Sort completed tasks by date (newest first)
+    const sortedCompletedTasks = allCompletedTasks.sort((a, b) => {
+        if (a.completedAt && b.completedAt) {
+            return new Date(b.completedAt) - new Date(a.completedAt);
+        }
+        return 0;
     });
 
     return (
@@ -31,16 +26,16 @@ const CompletedHistory = ({ tasks, statusHandle, deleteHandle }) => {
                 <h1>Completed History</h1>
             </header>
 
-            {olderCompletedTasks.length > 0 ? (
+            {sortedCompletedTasks.length > 0 ? (
                 <Tasks
-                    tasks={olderCompletedTasks}
+                    tasks={sortedCompletedTasks}
                     statusHandle={statusHandle}
                     deleteHandle={deleteHandle}
                     isCompletedList={true}
                 />
             ) : (
                 <div className="empty-history">
-                    No older completed tasks found.
+                    No completed tasks found.
                 </div>
             )}
         </div>

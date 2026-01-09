@@ -170,7 +170,7 @@ function App() {
     return completedDate.getTime() === today.getTime() || completedDate.getTime() === yesterday.getTime();
   });
 
-  const hasOlderTasks = completedTasks.length > recentCompletedTasks.length;
+
 
   return (
     <div className='app'>
@@ -178,8 +178,19 @@ function App() {
         <Route path="/" element={
           <>
             <header className="app-header">
-              <h1 className="app-title">Todo App</h1>
-              <p className="app-subtitle">Focus on your day</p>
+              <div className="header-content">
+                <h1 className="app-title">Todo App</h1>
+                <p className="app-subtitle">Focus on your day</p>
+              </div>
+              <button
+                className="history-btn"
+                onClick={handleShowHistory}
+                title="View History"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0" />
+                </svg>
+              </button>
             </header>
 
             <div className="input-area">
@@ -250,35 +261,7 @@ function App() {
               </div>
             )}
 
-            {hasOlderTasks && (
-              <div style={{ textAlign: 'center', padding: '10px 0 30px' }}>
-                <button
-                  onClick={handleShowHistory}
-                  title="View History"
-                  style={{
-                    background: 'var(--card-bg)',
-                    border: 'none',
-                    color: 'var(--text-secondary)',
-                    cursor: 'pointer',
-                    padding: '12px',
-                    borderRadius: '50%',
-                    boxShadow: 'var(--shadow-md)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                  onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 3v5h5" />
-                    <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" />
-                    <path d="M12 7v5l4 2" />
-                  </svg>
-                </button>
-              </div>
-            )}
+
 
             <ConfirmationModal
               isOpen={isDeleteModalOpen}
