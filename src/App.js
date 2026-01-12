@@ -191,7 +191,7 @@ function App() {
     <div className='app'>
       <Routes>
         <Route path="/" element={
-          <>
+          <div className="page-container">
             <header className="app-header">
               <div className="header-content">
                 <h1 className="app-title">Todo App</h1>
@@ -274,32 +274,34 @@ function App() {
               </button>
             </div>
 
-            <div className='task-group'>
-              <div className="task-heading">Pending ({pendingTasks.length})</div>
-              {pendingTasks.length > 0 ? (
-                <Tasks
-                  tasks={pendingTasks}
-                  statusHandle={handleStatusChange}
-                  deleteHandle={handleDeleteClick}
-                />
-              ) : (
-                <div style={{ padding: '20px', textAlign: 'center', opacity: 0.5 }}>
-                  No pending tasks
+            <main className="app-content">
+              <div className='task-group'>
+                <div className="task-heading">Pending ({pendingTasks.length})</div>
+                {pendingTasks.length > 0 ? (
+                  <Tasks
+                    tasks={pendingTasks}
+                    statusHandle={handleStatusChange}
+                    deleteHandle={handleDeleteClick}
+                  />
+                ) : (
+                  <div style={{ padding: '20px', textAlign: 'center', opacity: 0.5 }}>
+                    No pending tasks
+                  </div>
+                )}
+              </div>
+
+              {recentCompletedTasks.length > 0 && (
+                <div className='task-group'>
+                  <div className="task-heading">Completed ({recentCompletedTasks.length})</div>
+                  <Tasks
+                    tasks={recentCompletedTasks}
+                    statusHandle={handleStatusChange}
+                    deleteHandle={handleDeleteClick}
+                    isCompletedList={true}
+                  />
                 </div>
               )}
-            </div>
-
-            {recentCompletedTasks.length > 0 && (
-              <div className='task-group'>
-                <div className="task-heading">Completed ({recentCompletedTasks.length})</div>
-                <Tasks
-                  tasks={recentCompletedTasks}
-                  statusHandle={handleStatusChange}
-                  deleteHandle={handleDeleteClick}
-                  isCompletedList={true}
-                />
-              </div>
-            )}
+            </main>
 
 
 
@@ -317,7 +319,7 @@ function App() {
               title="Invalid Date"
               message={alertMessage}
             />
-          </>
+          </div>
         } />
 
         <Route path="/completed-history" element={
