@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# Todo App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, feature-rich Todo application built with React, designed to help you organize your daily tasks efficiently.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+*   **Task Management**
+    *   Create tasks with a title, optional description, due date, and time.
+    *   **Smart Sorting**: Pending tasks are automatically sorted by due date.
+    *   **Completion Tracking**: Mark tasks as complete/incomplete. Completed tasks move to a separate section.
+    *   **Task History**: View a comprehensive history of all completed tasks in a dedicated view.
 
-### `npm start`
+*   **Date & Time Control**
+    *   **Custom Time Picker**: An intuitive, analog-clock style time picker for setting specific due times.
+    *   **Date Validation**: Prevents mistakenly scheduling tasks for past dates.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+*   **User Experience**
+    *   **Dark/Light Mode**: Toggle between themes to suit your preference.
+    *   **Responsive Design**: Optimized for both desktop and mobile devices.
+    *   **Confirmation Modals**: Safety checks when deleting tasks to prevent accidental data loss.
+    *   **Offline Persistence**: All data (tasks and theme settings) is saved locally in your browser, so you never lose your progress even if you close the tab.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+*   **Frontend Library**: React 19
+*   **Routing**: React Router DOM 7
+*   **Styling**: Pure CSS with CSS Variables for theming
+*   **State Management**: React Hooks (`useState`, `useEffect`) + Context-free simple state
+*   **Storage**: Browser `localStorage`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+To get this project running locally on your machine:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1.  **Prerequisites**: Ensure you have [Node.js](https://nodejs.org/) installed (version 14 or higher recommended).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2.  **Clone the repository** (if applicable) or navigate to the project root.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3.  **Install Dependencies**:
+    Open your terminal in the project directory and run:
+    ```bash
+    npm install
+    ```
 
-### `npm run eject`
+## Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Development Mode
+To run the app in development mode:
+```bash
+npm start
+```
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser. The page will reload when you make changes.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Production Build
+To build the app for production:
+```bash
+npm run build
+```
+This builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Project Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*   `src/components`: Contains individual UI components like `Tasks`, `TimePicker`, `ConfirmationModal`, etc.
+*   `src/App.js`: Main application logic, state management, and routing.
+*   `src/index.css`: Global styles and theme variable definitions.
